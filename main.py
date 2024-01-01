@@ -11,7 +11,12 @@ loop_time = time()
 while(True):
     screenshot = wincap.get_screenshot()
 
-    points = vision.find(screenshot, 0.5, debug_mode='rect')
+    processed_image = vision.apply_hsv_filter(screenshot)
+    rectangles = vision.find(processed_image, 0.5)
+    output_image = vision.draw_rectangles(screenshot, rectangles)
+
+    cv.imshow('Processed', processed_image)
+    cv.imshow('Matches', output_image)
 
     print('FPS {}'.format(1 / (time() - loop_time)))
     loop_time = time()
