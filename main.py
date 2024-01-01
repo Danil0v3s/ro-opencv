@@ -1,5 +1,9 @@
 import cv2 as cv
 import numpy as np
+import pyautogui
+from time import time
+from windowcapture import WindowCapture
+
 
 def find_click_positions(needle_img_path, haystack_img_path, threshold = 0.7, debug_mode=None):
     haystack_img = cv.imread(haystack_img_path, cv.IMREAD_UNCHANGED)
@@ -52,4 +56,20 @@ def find_click_positions(needle_img_path, haystack_img_path, threshold = 0.7, de
     return points
 
 
-points = find_click_positions('images/toad2.png', 'images/screen.png', 0.4, 'rect')
+wincap = WindowCapture("4th | Gepard Shield 3.0 (^-_-^)")
+
+loop_time = time()
+while(True):
+    screenshot = wincap.get_screenshot()
+
+    cv.imshow("CV", screenshot)
+
+    print('FPS {}'.format(1 / (time() - loop_time)))
+    loop_time = time()
+
+    if cv.waitKey(1) == ord('q'):
+        cv.destroyAllWindows()
+        break
+
+
+print('Done')
