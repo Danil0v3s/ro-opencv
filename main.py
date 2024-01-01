@@ -15,7 +15,7 @@ while(True):
     
     detection_image = vision.draw_rectangles(screenshot, rectangles)
 
-    cv.imshow('Matches', detection_image)
+    cv.imshow('Matches', screenshot)
 
     print('FPS {}'.format(1 / (time() - loop_time)))
     loop_time = time()
