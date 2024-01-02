@@ -34,6 +34,7 @@ wincap.start()
 detector.start()
 bot.start()
 
+loop_time = time()
 while(True):
     if wincap.screenshot is None:
         continue
@@ -46,7 +47,11 @@ while(True):
     
     if DEBUG:
         detection_image = vision.draw_rectangles(wincap.screenshot, detector.rectangles)
-        cv.imshow('Matches', wincap.screenshot)
+        fps = int(1 / (time() - loop_time))
+        cv.putText(detection_image, 'FPS {}'.format(fps), (10,50), cv.FONT_HERSHEY_SIMPLEX, 1, (255,0,255), 1, cv.LINE_AA)
+        cv.imshow('Matches', detection_image)
+
+    loop_time = time()
 
     key = cv.waitKey(1)
     if key == ord('q'):
